@@ -1,0 +1,114 @@
+{
+  "pg_url": "postgres://localhost/shovel",
+  "eth_sources": [
+    {
+      "name": "sepolia",
+      "chain_id": 11155111,
+      "urls": ["https://airlock.gnosisguild.org/api/v1/11155111/rpc"]
+    }
+  ],
+  "integrations": [
+    {
+      "name": "ciphernode-additions",
+      "enabled": true,
+      "sources": [{ "name": "sepolia", "start": 6795000 }],
+      "table": {
+        "name": "ciphernode-additions",
+        "columns": [
+          { "name": "block_num", "type": "numeric" },
+          { "name": "tx_hash", "type": "bytea" },
+          { "name": "node_address", "type": "bytea" },
+          { "name": "index", "type": "numeric" }
+        ]
+      },
+      "block": [
+        { "name": "block_num", "column": "block_num" },
+        { "name": "tx_hash", "column": "tx_hash" }
+      ],
+      "event": {
+        "name": "CiphernodeAdded",
+        "type": "event",
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "node",
+            "type": "address",
+            "column": "node_address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "index",
+            "type": "uint256",
+            "column": "index"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "numNodes",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "size",
+            "type": "uint256"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ciphernode-removals",
+      "enabled": true,
+      "sources": [{ "name": "sepolia", "start": 6795000 }],
+      "table": {
+        "name": "ciphernode-removals",
+        "columns": [
+          { "name": "block_num", "type": "numeric" },
+          { "name": "tx_hash", "type": "bytea" },
+          { "name": "node_address", "type": "bytea" },
+          { "name": "index", "type": "numeric" }
+        ]
+      },
+      "block": [
+        { "name": "block_num", "column": "block_num" },
+        { "name": "tx_hash", "column": "tx_hash" }
+      ],
+      "event": {
+        "name": "CiphernodeRemoved",
+        "type": "event",
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "node",
+            "type": "address",
+            "column": "node_address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "index",
+            "type": "uint256",
+            "column": "index"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "numNodes",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "size",
+            "type": "uint256"
+          }
+        ]
+      }
+    }
+  ]
+}
